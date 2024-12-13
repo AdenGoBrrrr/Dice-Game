@@ -3,6 +3,7 @@ import random
 # Setting Global Variables
 die_type = 0
 
+
 class Item:
     def __init__(self, name, rarity, description, effect, weighting):
         self.name = name
@@ -13,7 +14,9 @@ class Item:
 
 
 def rules():
-    print(f"||Dice Game||\n   - To play this game you will roll 9 consecutive D{die_type},\n   - By default, when you receive a duplicate of a die you have rolled preciously, you can chose to re-roll the die, or keep it.\n   - If you have 3 of the same die, by default you must re-roll the die.\n   - At the end of a round of rolling die, any Nat 1s can be spent on either:\n      - Multiplying the value of your score.\n      - Getting a new die of any value you chose.\n      - Staying the same.\n   - By beating a round you will earn money based on your final score in that game, this can be used in a shop you can enter every 5 rounds.\n   - Items bought in the shop will change how the game works, giving bonuses, or other boosts.\n   - Rounds will get progressively harder until you lose, There is no 'winning'.")
+    print(
+        f"||Dice Game||\n   - To play this game you will roll 9 consecutive D{die_type},\n   - By default, when you receive a duplicate of a die you have rolled preciously, you can chose to re-roll the die, or keep it.\n   - If you have 3 of the same die, by default you must re-roll the die.\n   - At the end of a round of rolling die, any Nat 1s can be spent on either:\n      - Multiplying the value of your score.\n      - Getting a new die of any value you chose.\n      - Staying the same.\n   - By beating a round you will earn money based on your final score in that game, this can be used in a shop you can enter every 5 rounds.\n   - Items bought in the shop will change how the game works, giving bonuses, or other boosts.\n   - Rounds will get progressively harder until you lose, There is no 'winning'."
+    )
 
 
 def roll_die():
@@ -23,7 +26,7 @@ def roll_die():
 def search_duplicate_die(die_array, new_dice):
     count = 0
 
-    for i in range (len(die_array)):
+    for i in range(len(die_array)):
         if die_array[i] == new_dice:
             count += 1
 
@@ -31,7 +34,7 @@ def search_duplicate_die(die_array, new_dice):
 
 
 def search_die(die_array, searched_dice):
-    for i in range (len(die_array)):
+    for i in range(len(die_array)):
         if die_array[i] == searched_dice:
             return i
     return -1
@@ -62,7 +65,9 @@ def main_game():
                 print(f"Your current hand is: {die_array}\nYou rolled a {new_dice}")
                 numb_of_die = search_duplicate_die(die_array, new_dice)
                 if numb_of_die > 3:
-                    print(f"You currently have {numb_of_die} of this number in your hand currently, You must re-roll.")
+                    print(
+                        f"You currently have {numb_of_die} of this number in your hand currently, You must re-roll."
+                    )
                     i -= 1
                 else:
                     die_array.append(new_dice)
@@ -70,18 +75,11 @@ def main_game():
             search_for_one = True
             while search_for_one:
                 location_one_found = search_die(die_array, 1)
-            
-
 
             score = score_counter(die_array, score)
             print(f"Your final hand is: {die_array}\nYour final hand is: {score}")
             round_cont = False
             game_cont = False
-
-
-
-
-
 
 
 ## Main ##
