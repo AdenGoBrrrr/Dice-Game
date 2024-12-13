@@ -1,4 +1,5 @@
-import random
+from random import randint
+from time import sleep
 
 # Setting Global Variables
 die_type = 0
@@ -20,7 +21,60 @@ def rules():
 
 
 def roll_die():
-    return random.randint(1, die_type)
+    return randint(1, die_type)
+
+
+def get_multiplier():
+    # Multiplier will be between 0.5 and 100, of different rarities
+    Chance_num = randint(1,10000)
+
+    if Chance_num <= 25:
+        multiplier = 0.5
+    elif Chance_num <= 100:
+        multiplier = 0.75
+    elif Chance_num <= 500:
+        multiplier = 1
+    elif Chance_num <= 1500:
+        multiplier = 1.5
+    elif Chance_num <= 3000:
+        multiplier = 2
+    elif Chance_num <= 5000:
+        multiplier = 3
+    elif Chance_num <= 6500:
+        multiplier = 5
+    elif Chance_num <= 7250:
+        multiplier = 7.5
+    elif Chance_num <= 8000:
+        multiplier = 10
+    elif Chance_num <= 8750:
+        multiplier = 15
+    elif Chance_num <= 9250:
+        multiplier = 20
+    elif Chance_num <= 9500:
+        multiplier = 25
+    elif Chance_num <= 9750:
+        multiplier = 45
+    elif Chance_num <= 9875:
+        multiplier = 50
+    elif Chance_num <= 9950:
+        multiplier = 65
+    elif Chance_num <= 9975:
+        multiplier = 75
+    elif Chance_num <= 9990:
+        multiplier = 85
+    elif Chance_num <= 9999:
+        multiplier = 95
+    else:
+        multiplier = 100
+
+    return multiplier
+
+
+def is_between(compared_num, lower, upper):
+    if compared_num >= lower and compared_num <= upper:
+        return True
+    else:
+        return False
 
 
 def search_duplicate_die(die_array, new_dice):
@@ -34,10 +88,46 @@ def search_duplicate_die(die_array, new_dice):
 
 
 def search_die(die_array, searched_dice):
+    # Sets up variables used for counting searched_due
+    num_of_searched_die = 0
+    locations_of_searched_die = []
+
     for i in range(len(die_array)):
         if die_array[i] == searched_dice:
-            return i
-    return -1
+            locations_of_searched_die.append(i)
+            num_of_searched_die += 1
+
+    return num_of_searched_die, locations_of_searched_die
+
+
+def decisions_with_ones(number_of_ones):
+    # Setting up variables for this sub-program
+    num_of_multipliers = 0
+    num_of_new_die = 0
+    num_of_staying = 0
+
+    for i in range(number_of_ones):
+        valid_input = False
+        while not valid_input:
+            user_input = str(input(f"What would you like to do with your {i+1} dice?:\n - Multiply your score (Multiply)\n - Replace it (replace)\n - Keep it (Stay)\n")).lower()
+            
+            if user_input == "multiply" or user_input == "replace" or user_input == "stay":
+                valid_input = True
+            else:
+                print(f"Your input of {user_input} was invalid, please try again.")
+        
+        if user_input == "multiply": 
+            num_of_multipliers += 1
+
+        elif user_input == "replace":
+            num_of_new_die += 1
+
+        else:
+            num_of_staying += 1
+
+        return num_of_multipliers, num_of_new_die, num_of_staying
+
+            
 
 
 def score_counter(die_array, score):
@@ -47,6 +137,7 @@ def score_counter(die_array, score):
 
 
 def main_game():
+    # Set variables for the game
     round_num = 0
     game_cont = True
     die_count = 9
@@ -70,11 +161,12 @@ def main_game():
                     )
                     i -= 1
                 else:
-                    die_array.append(new_dice)
+                    die_array.append(new_dice) 
 
-            search_for_one = True
-            while search_for_one:
-                location_one_found = search_die(die_array, 1)
+            # Search for 1
+            numb_of_ones, locations_of_ones = search_die(die_array, 1)
+
+
 
             score = score_counter(die_array, score)
             print(f"Your final hand is: {die_array}\nYour final hand is: {score}")
@@ -85,5 +177,6 @@ def main_game():
 ## Main ##
 
 die_type = 20
-rules()
-main_game()
+#rules()
+#main_game()
+decisions_with_ones(2)
